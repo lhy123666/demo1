@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo1.dao.AnswerDao">
+
+    <resultMap type="com.example.demo1.entity.Answer" id="AnswerMap">
+        <result property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="createtime" column="CreateTime" jdbcType="TIMESTAMP"/>
+        <result property="createid" column="CreateId" jdbcType="INTEGER"/>
+        <result property="parentquestionid" column="ParentQuestionId" jdbcType="INTEGER"/>
+        <result property="visibility" column="Visibility" jdbcType="INTEGER"/>
+        <result property="text" column="Text" jdbcType="VARCHAR"/>
+        <result property="likecount" column="LikeCount" jdbcType="INTEGER"/>
+        <result property="commentcount" column="CommentCount" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="AnswerMap">
+        select
+          ID, CreateTime, CreateId, ParentQuestionId, Visibility, Text, LikeCount, CommentCount
+        from daleme.answer
+        where ID = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="AnswerMap">
+        select
+          ID, CreateTime, CreateId, ParentQuestionId, Visibility, Text, LikeCount, CommentCount
+        from daleme.answer
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="AnswerMap">
+        select
+          ID, CreateTime, CreateId, ParentQuestionId, Visibility, Text, LikeCount, CommentCount
+        from daleme.answer
+        <where>
+            <if test="id != null">
+                and ID = #{id}
+            </if>
+            <if test="createtime != null">
+                and CreateTime = #{createtime}
+            </if>
+            <if test="createid != null">
+                and CreateId = #{createid}
+            </if>
+            <if test="parentquestionid != null">
+                and ParentQuestionId = #{parentquestionid}
+            </if>
+            <if test="visibility != null">
+                and Visibility = #{visibility}
+            </if>
+            <if test="text != null and text != ''">
+                and Text = #{text}
+            </if>
+            <if test="likecount != null">
+                and LikeCount = #{likecount}
+            </if>
+            <if test="commentcount != null">
+                and CommentCount = #{commentcount}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into daleme.answer(CreateTime, CreateId, ParentQuestionId, Visibility, Text, LikeCount, CommentCount)
+        values (#{createtime}, #{createid}, #{parentquestionid}, #{visibility}, #{text}, #{likecount}, #{commentcount})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update daleme.answer
+        <set>
+            <if test="createtime != null">
+                CreateTime = #{createtime},
+            </if>
+            <if test="createid != null">
+                CreateId = #{createid},
+            </if>
+            <if test="parentquestionid != null">
+                ParentQuestionId = #{parentquestionid},
+            </if>
+            <if test="visibility != null">
+                Visibility = #{visibility},
+            </if>
+            <if test="text != null and text != ''">
+                Text = #{text},
+            </if>
+            <if test="likecount != null">
+                LikeCount = #{likecount},
+            </if>
+            <if test="commentcount != null">
+                CommentCount = #{commentcount},
+            </if>
+        </set>
+        where ID = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from daleme.answer where ID = #{id}
+    </delete>
+
+</mapper>

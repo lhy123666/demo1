@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo1.dao.CommentDao">
+
+    <resultMap type="com.example.demo1.entity.Comment" id="CommentMap">
+        <result property="id" column="ID" jdbcType="INTEGER"/>
+        <result property="createtime" column="CreateTime" jdbcType="TIMESTAMP"/>
+        <result property="createid" column="CreateId" jdbcType="INTEGER"/>
+        <result property="text" column="Text" jdbcType="VARCHAR"/>
+        <result property="visibility" column="Visibility" jdbcType="INTEGER"/>
+        <result property="parentanswerid" column="ParentAnswerId" jdbcType="INTEGER"/>
+        <result property="likecount" column="LikeCount" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="CommentMap">
+        select
+          ID, CreateTime, CreateId, Text, Visibility, ParentAnswerId, LikeCount
+        from daleme.comment
+        where ID = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="CommentMap">
+        select
+          ID, CreateTime, CreateId, Text, Visibility, ParentAnswerId, LikeCount
+        from daleme.comment
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="CommentMap">
+        select
+          ID, CreateTime, CreateId, Text, Visibility, ParentAnswerId, LikeCount
+        from daleme.comment
+        <where>
+            <if test="id != null">
+                and ID = #{id}
+            </if>
+            <if test="createtime != null">
+                and CreateTime = #{createtime}
+            </if>
+            <if test="createid != null">
+                and CreateId = #{createid}
+            </if>
+            <if test="text != null and text != ''">
+                and Text = #{text}
+            </if>
+            <if test="visibility != null">
+                and Visibility = #{visibility}
+            </if>
+            <if test="parentanswerid != null">
+                and ParentAnswerId = #{parentanswerid}
+            </if>
+            <if test="likecount != null">
+                and LikeCount = #{likecount}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into daleme.comment(CreateTime, CreateId, Text, Visibility, ParentAnswerId, LikeCount)
+        values (#{createtime}, #{createid}, #{text}, #{visibility}, #{parentanswerid}, #{likecount})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update daleme.comment
+        <set>
+            <if test="createtime != null">
+                CreateTime = #{createtime},
+            </if>
+            <if test="createid != null">
+                CreateId = #{createid},
+            </if>
+            <if test="text != null and text != ''">
+                Text = #{text},
+            </if>
+            <if test="visibility != null">
+                Visibility = #{visibility},
+            </if>
+            <if test="parentanswerid != null">
+                ParentAnswerId = #{parentanswerid},
+            </if>
+            <if test="likecount != null">
+                LikeCount = #{likecount},
+            </if>
+        </set>
+        where ID = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from daleme.comment where ID = #{id}
+    </delete>
+
+</mapper>
