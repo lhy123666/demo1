@@ -18,6 +18,10 @@ public interface QuestionService {
      * @return 实例对象
      */
     Question queryById(Integer id);
+    /**
+     * 通过标题查询问题
+     */
+    Question queryByTitle(String title);
 
     /**
      * 查询多条数据
@@ -31,18 +35,29 @@ public interface QuestionService {
     /**
      * 新增数据
      *
-     * @param question 实例对象
+     * @param
      * @return 实例对象
      */
-    Question insert(Question question);
+    boolean insert(Integer createid,String titile,String description);
 
     /**
      * 修改数据
      *
-     * @param question 实例对象
+     * @param
      * @return 实例对象
      */
-    Question update(Question question);
+    Question update(String titile,String description);
+
+    List<Question> queryAll1();
+
+    /**
+     * 终结问题
+     */
+    boolean end(Integer id);
+    /**
+     * 屏蔽问题
+     */
+    boolean shield(Integer id);
 
     /**
      * 通过主键删除数据

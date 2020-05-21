@@ -66,7 +66,7 @@
     <delete id="deleteById">
         delete from daleme.administer where ID = #{id}
     </delete>
-
+    <!--管理员登录-->
     <select id="adminlogin" resultMap="AdministerMap">
         select
           ID, Admin_number, password

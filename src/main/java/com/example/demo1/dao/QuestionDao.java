@@ -20,6 +20,14 @@ public interface QuestionDao {
      */
     Question queryById(Integer id);
 
+
+    /**
+     * 通过标题来搜索问题
+     * @param title
+     * @return
+     */
+    Question queryByTitle(String title);
+
     /**
      * 查询指定行数据
      *
@@ -28,6 +36,10 @@ public interface QuestionDao {
      * @return 对象列表
      */
     List<Question> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    /**
+     *展示问题按时间排序
+     */
+    List<Question> queryAll1();
 
 
     /**
@@ -41,18 +53,18 @@ public interface QuestionDao {
     /**
      * 新增数据
      *
-     * @param question 实例对象
+     * @param
      * @return 影响行数
      */
-    int insert(Question question);
+    int insert(@Param("createid") Integer createid,@Param("titile") String titile, @Param("description") String description);
 
     /**
      * 修改数据
      *
-     * @param question 实例对象
+     * @param
      * @return 影响行数
      */
-    int update(Question question);
+    int update(@Param("titile") String titile, @Param("description") String description);
 
     /**
      * 通过主键删除数据
@@ -61,5 +73,14 @@ public interface QuestionDao {
      * @return 影响行数
      */
     int deleteById(Integer id);
+
+    /**
+     * 终结问题
+     */
+    int end(Integer id);
+    /**
+     * 屏蔽问题
+     */
+    int shield(Integer id);
 
 }

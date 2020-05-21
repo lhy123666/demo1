@@ -30,6 +30,11 @@ public class QuestionServiceImpl implements QuestionService {
         return this.questionDao.queryById(id);
     }
 
+    @Override
+    public Question queryByTitle(String title) {
+        return this.questionDao.queryByTitle(title);
+    }
+
     /**
      * 查询多条数据
      *
@@ -42,28 +47,43 @@ public class QuestionServiceImpl implements QuestionService {
         return this.questionDao.queryAllByLimit(offset, limit);
     }
 
+    @Override
+    public List<Question> queryAll1() {
+        return this.questionDao.queryAll1();
+    }
+
     /**
      * 新增数据
      *
-     * @param question 实例对象
+     * @param
      * @return 实例对象
      */
     @Override
-    public Question insert(Question question) {
-        this.questionDao.insert(question);
-        return question;
+    public boolean insert(Integer createid,String titile,String description) {
+        questionDao.insert(createid, titile, description);
+        return true;
     }
 
     /**
      * 修改数据
      *
-     * @param question 实例对象
+     * @param
      * @return 实例对象
      */
     @Override
-    public Question update(Question question) {
-        this.questionDao.update(question);
-        return this.queryById(question.getId());
+    public Question update(String titile,String description) {
+        questionDao.update(titile, description);
+        return queryByTitle(titile);
+    }
+
+    @Override
+    public boolean end(Integer id) {
+        return this.questionDao.end(id) >0;
+    }
+
+    @Override
+    public boolean shield(Integer id) {
+        return this.questionDao.shield(id) >0;
     }
 
     /**
