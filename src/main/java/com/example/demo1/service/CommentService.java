@@ -1,6 +1,8 @@
 package com.example.demo1.service;
 
 import com.example.demo1.entity.Comment;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 /**
@@ -31,10 +33,10 @@ public interface CommentService {
     /**
      * 新增数据
      *
-     * @param comment 实例对象
+     * @param
      * @return 实例对象
      */
-    Comment insert(Comment comment);
+    boolean insert(int createid, String text, int parentanswerid);
 
     /**
      * 修改数据
@@ -43,6 +45,8 @@ public interface CommentService {
      * @return 实例对象
      */
     Comment update(Comment comment);
+    boolean shield(int id);
+    int returnid(int parentanswerid);
 
     /**
      * 通过主键删除数据

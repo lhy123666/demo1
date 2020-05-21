@@ -39,12 +39,18 @@ public interface CommentDao {
     List<Comment> queryAll(Comment comment);
 
     /**
+     * 展示所有评论
+     * @return
+     */
+    List<Comment> queryAll1();
+
+    /**
      * 新增数据
      *
-     * @param comment 实例对象
+     * @param
      * @return 影响行数
      */
-    int insert(Comment comment);
+    int insert(@Param("createid") int createid,@Param("text") String text,@Param("parentanswerid") int parentanswerid);
 
     /**
      * 修改数据
@@ -54,6 +60,9 @@ public interface CommentDao {
      */
     int update(Comment comment);
 
+    int shield(Integer id);
+    int returnid(Integer parentanswerid);
+
     /**
      * 通过主键删除数据
      *
@@ -61,5 +70,6 @@ public interface CommentDao {
      * @return 影响行数
      */
     int deleteById(Integer id);
+
 
 }

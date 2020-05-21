@@ -76,4 +76,15 @@ public class AnswerServiceImpl implements AnswerService {
     public boolean deleteById(Integer id) {
         return this.answerDao.deleteById(id) > 0;
     }
+
+    @Override
+    public boolean shield(Integer id) {
+        return this.answerDao.shield(id)>0;
+    }
+
+    @Override
+    public int returnid(Integer parentquestionid) {
+        int id=this.answerDao.returnid(parentquestionid);
+        return id;
+    }
 }

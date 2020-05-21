@@ -51,5 +51,7 @@ public interface AnswerService {
      * @return 是否成功
      */
     boolean deleteById(Integer id);
+    boolean shield(Integer id);
+    int returnid(Integer parentquestionid);
 
 }

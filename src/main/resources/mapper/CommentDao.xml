@@ -58,37 +58,39 @@
         </where>
     </select>
 
-    <!--新增所有列-->
+    <!--展示所有评论-->
+   <select id="queryAll1" resultMap="CommentMap">
+       select * from daleme.Comment where Visibility!=0;
+   </select>
+    <!--发布评论-->
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into daleme.comment(CreateTime, CreateId, Text, Visibility, ParentAnswerId, LikeCount)
-        values (#{createtime}, #{createid}, #{text}, #{visibility}, #{parentanswerid}, #{likecount})
+        values (now(), #{createid}, #{text}, 1, #{parentanswerid}, 0)
     </insert>
 
-    <!--通过主键修改数据-->
+    <!--修改评论-->
     <update id="update">
         update daleme.comment
         <set>
             <if test="createtime != null">
-                CreateTime = #{createtime},
-            </if>
-            <if test="createid != null">
-                CreateId = #{createid},
+                CreateTime = now(),
             </if>
             <if test="text != null and text != ''">
                 Text = #{text},
             </if>
-            <if test="visibility != null">
-                Visibility = #{visibility},
-            </if>
-            <if test="parentanswerid != null">
-                ParentAnswerId = #{parentanswerid},
-            </if>
-            <if test="likecount != null">
-                LikeCount = #{likecount},
-            </if>
         </set>
         where ID = #{id}
     </update>
+
+    <!--屏蔽评论-->
+    <update id="shield">
+        update daleme.comment set Visibility=0 where ID=#{id}
+    </update>
+
+    <!--返回评论id-->
+    <select id="returnid" resultType="java.lang.Integer">
+        select id from daleme.comment where ParentAnswerId = #{parentanswerid}
+    </select>
 
     <!--通过主键删除-->
     <delete id="deleteById">

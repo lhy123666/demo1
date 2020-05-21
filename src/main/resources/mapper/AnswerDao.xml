@@ -102,4 +102,13 @@
         delete from daleme.answer where ID = #{id}
     </delete>
 
+    <!--屏蔽回答-->
+    <update id="shield">
+        update daleme.answer set Visibility=0 where ID=#{id}
+    </update>
+    <!--返回回答的id-->
+    <select id="returnid" resultType="java.lang.Integer">
+        select ID from daleme.answer where ParentQuestionId = #{parentquestionid}
+    </select>
+
 </mapper>

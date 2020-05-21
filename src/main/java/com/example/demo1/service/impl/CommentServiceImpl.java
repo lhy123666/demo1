@@ -3,6 +3,7 @@ package com.example.demo1.service.impl;
 import com.example.demo1.entity.Comment;
 import com.example.demo1.dao.CommentDao;
 import com.example.demo1.service.CommentService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -45,13 +46,13 @@ public class CommentServiceImpl implements CommentService {
     /**
      * 新增数据
      *
-     * @param comment 实例对象
+     * @param
      * @return 实例对象
      */
     @Override
-    public Comment insert(Comment comment) {
-        this.commentDao.insert(comment);
-        return comment;
+    public boolean insert(int createid,  String text, int parentanswerid) {
+        this.commentDao.insert(createid, text, parentanswerid);
+        return true;
     }
 
     /**
@@ -75,5 +76,16 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public boolean deleteById(Integer id) {
         return this.commentDao.deleteById(id) > 0;
+    }
+
+    @Override
+    public boolean shield(int id) {
+        return this.commentDao.shield(id)>0;
+    }
+
+    @Override
+    public int returnid(int parentanswerid) {
+        int id=this.commentDao.returnid(parentanswerid);
+        return id;
     }
 }

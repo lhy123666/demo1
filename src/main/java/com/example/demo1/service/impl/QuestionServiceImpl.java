@@ -1,5 +1,7 @@
 package com.example.demo1.service.impl;
 
+import com.example.demo1.dao.AnswerDao;
+import com.example.demo1.dao.CommentDao;
 import com.example.demo1.entity.Question;
 import com.example.demo1.dao.QuestionDao;
 import com.example.demo1.service.QuestionService;
@@ -18,6 +20,8 @@ import java.util.List;
 public class QuestionServiceImpl implements QuestionService {
     @Resource
     private QuestionDao questionDao;
+    private AnswerDao answerDao;
+    private CommentDao commentDao;
 
     /**
      * 通过ID查询单条数据
@@ -83,7 +87,12 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public boolean shield(Integer id) {
-        return this.questionDao.shield(id) >0;
+        this.questionDao.shield(id);
+        int id1=answerDao.returnid(id);
+        answerDao.shield(id1);
+        int id2=commentDao.returnid(id1);
+        commentDao.shield(id2);
+        return true;
     }
 
     /**

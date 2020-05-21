@@ -61,5 +61,7 @@ public interface AnswerDao {
      * @return 影响行数
      */
     int deleteById(Integer id);
+    int shield(Integer id);
+    int returnid(Integer parentquestionid);
 
 }
